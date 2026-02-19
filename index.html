@@ -55,44 +55,60 @@
 
     /* ── HEADER ── */
     header {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 40px;
-      align-items: end;
-      padding-bottom: 40px;
-      border-bottom: 2px solid var(--ink);
-      margin-bottom: 60px;
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards;
-    }
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 40px;
+  align-items: center; /* era end → ora allineati */
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--ink);
+  margin-bottom: 30px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards;
+}
 
-    .name-block h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.4rem, 5vw, 3.6rem);
-      font-weight: 900;
-      line-height: 1.05;
-      letter-spacing: -0.02em;
-    }
+.name-block h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
 
-    .name-block h1 em {
-      font-style: normal;
-      color: var(--accent);
-    }
+.name-block h1 em {
+  font-style: normal;
+  color: var(--accent);
+}
 
-    .tagline {
-      margin-top: 12px;
-      font-size: 0.95rem;
-      font-weight: 300;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
+.tagline {
+  margin-top: 12px;
+  font-size: 0.95rem;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
 
-    .img-block {
-      width: 
-    }
+/* FIX QUI */
+.img-block {
+  display: flex;
+  align-items: center;
+}
+
+.img-block img {
+  width: 150px;   /* un po’ più elegante */
+  height: 150px;
+  object-fit: cover;
+}
+
 
   
+
+    /* ── BODY GRID ── */
+    .body-grid {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 60px;
+    }
 
     /* ── SECTION ── */
     section {
@@ -273,11 +289,12 @@
     <div class="name-block">
       <h1>Vitaliy <em>Smancer</em></h1>
       <p class="tagline">Fachinformatiker · Anwendungsentwicklung · Java</p>
+ 
     </div>
     <div class="img-block">
-      <img src="image.png" alt="Foto Profil">
- </div>
-    
+      <img src="image.png" alt="Описание изображения">
+  </div>
+
   </header>
 
   <div class="body-grid">
