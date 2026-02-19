@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vitaliy Smancer — CV</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #0f0f0f;
+      --bg: #f5f0e8;
+      --accent: #1a3a5c;
+      --gold: #c9a84c;
+      --light: #e8e0d0;
+      --muted: #6b6055;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    /* ── SIDE STRIPE ── */
+    .stripe {
+      position: fixed;
+      left: 0; top: 0;
+      width: 6px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--gold) 0%, var(--accent) 100%);
+      z-index: 100;
+    }
+
+    /* ── LAYOUT ── */
+    .page {
+      position: relative; z-index: 1;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 60px 40px 80px 60px;
+    }
+
+    /* ── HEADER ── */
+    header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: end;
+      padding-bottom: 40px;
+      border-bottom: 2px solid var(--ink);
+      margin-bottom: 60px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards;
+    }
+
+    .name-block h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    .name-block h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .tagline {
+      margin-top: 12px;
+      font-size: 0.95rem;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .contact-block {
+      text-align: right;
+      font-size: 0.85rem;
+      line-height: 2;
+      color: var(--muted);
+    }
+
+    .contact-block a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .contact-block a:hover { text-decoration: underline; }
+
+    /* ── BODY GRID ── */
+    .body-grid {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 60px;
+    }
+
+    /* ── SECTION ── */
+    section {
+      margin-bottom: 52px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards;
+    }
+
+    section:nth-child(1) { animation-delay: 0.15s; }
+    section:nth-child(2) { animation-delay: 0.25s; }
+    section:nth-child(3) { animation-delay: 0.35s; }
+
+    .section-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent) 0%, transparent 100%);
+      opacity: 0.3;
+    }
+
+    /* ── ENTRY ── */
+    .entry {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 32px;
+    }
+
+    .entry::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 7px;
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .entry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .entry-title {
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .entry-company {
+      font-size: 0.88rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .entry-date {
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      font-weight: 500;
+      color: var(--gold);
+      background: rgba(201,168,76,0.12);
+      padding: 3px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .entry-desc {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar section {
+      background: var(--light);
+      border-radius: 12px;
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+
+    /* ── SKILLS ── */
+    .skill-tag {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 4px;
+      padding: 4px 10px;
+      margin: 4px 4px 4px 0;
+      letter-spacing: 0.03em;
+    }
+
+    /* ── LANGUAGES ── */
+    .lang-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .lang-name {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .lang-level {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .lang-bar-bg {
+      height: 4px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 2px;
+      margin-top: 5px;
+      overflow: hidden;
+    }
+
+    .lang-bar {
+      height: 100%;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--accent));
+      animation: growBar 1.2s ease forwards;
+      transform-origin: left;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes growBar {
+      from { width: 0; }
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 60px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      .page { padding: 40px 24px 60px 32px; }
+      .body-grid { grid-template-columns: 1fr; }
+      header { grid-template-columns: 1fr; }
+      .contact-block { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="stripe"></div>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <header>
+    <div class="name-block">
+      <h1>Vitaliy <em>Smancer</em></h1>
+      <p class="tagline">Fachinformatiker · Anwendungsentwicklung · Java</p>
+    </div>
+    <div class="contact-block">
+      <div>Erich-Kästner-Str. 75, 12619 Berlin</div>
+      <div><a href="tel:+4915730929756">+49 1573 0929756</a></div>
+      <div><a href="mailto:vitaliy.smancer@gmail.com">vitaliy.smancer@gmail.com</a></div>
+    </div>
+  </header>
+
+  <div class="body-grid">
+
+    <!-- MAIN COLUMN -->
+    <main>
+
+      <!-- BERUFSERFAHRUNG -->
+      <section>
+        <h2 class="section-label">Berufserfahrung</h2>
+
+        <div class="entry">
+          <div class="entry-header">
+            <div>
+              <div class="entry-title">Experte für Visa und Legalisierung</div>
+              <div class="entry-company">CIBT Visas, Berlin</div>
+            </div>
+            <span class="entry-date">05/2023 – 12/2024</span>
+          </div>
+          <p class="entry-desc">Prüfung und Vorbereitung von Dokumenten zur Beglaubigung und Legalisierung, Unterstützung bei der Beantragung von Visa und Aufenthaltstiteln.</p>
+        </div>
+
+        <div class="entry">
+          <div class="entry-header">
+            <div>
+              <div class="entry-title">Mehrsprachiger Sales- & Marketing-Manager</div>
+              <div class="entry-company">Concentrix, Berlin</div>
+            </div>
+            <span class="entry-date">05/2021 – 05/2023</span>
+          </div>
+          <p class="entry-desc">B2B-Vertrieb und Performance-Marketing über Facebook, Instagram, WhatsApp und Messenger.</p>
+        </div>
+
+        <div class="entry">
+          <div class="entry-header">
+            <div>
+              <div class="entry-title">Speditionsleiter</div>
+              <div class="entry-company">DSV Solutions GmbH, Wenzendorf</div>
+            </div>
+            <span class="entry-date">02/2017 – 05/2021</span>
+          </div>
+          <p class="entry-desc">Erstellung und Bearbeitung von Versanddokumenten im internationalen Logistikumfeld.</p>
+        </div>
+
+        <div class="entry">
+          <div class="entry-header">
+            <div>
+              <div class="entry-title">Mehrsprachiger Dolmetscher und Übersetzer</div>
+              <div class="entry-company">Marcus Evans Group, London</div>
+            </div>
+            <span class="entry-date">07/2013 – 02/2017</span>
+          </div>
+          <p class="entry-desc">Korrekturlesen, Bearbeiten, Überarbeiten und Finalisieren übersetzter Inhalte (Englisch, Deutsch, Russisch, Lettisch) verschiedener Dateitypen.</p>
+        </div>
+      </section>
+
+      <!-- AUSBILDUNG -->
+      <section>
+        <h2 class="section-label">Ausbildung</h2>
+
+        <div class="entry">
+          <div class="entry-header">
+            <div>
+              <div class="entry-title">Umschulung zum Fachinformatiker Anwendungsentwicklung</div>
+              <div class="entry-company">WBS-Training, Berlin · Schwerpunkt Java</div>
+            </div>
+            <span class="entry-date">12/2024 – Heute</span>
+          </div>
+        </div>
+
+        <div class="entry">
+          <div class="entry-header">
+            <div>
+              <div class="entry-title">Masterstudium Internationale Unternehmenskommunikation</div>
+              <div class="entry-company">Riga Stradins University (RSU)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="entry">
+          <div class="entry-header">
+            <div>
+              <div class="entry-title">Bachelorstudium Internationale Unternehmenskommunikation</div>
+              <div class="entry-company">Riga Stradins University (RSU)</div>
+            </div>
+            <span class="entry-date">09/2008 – 06/2011</span>
+          </div>
+        </div>
+
+        <div class="entry">
+          <div class="entry-header">
+            <div>
+              <div class="entry-title">Allgemeine Hochschulreife</div>
+              <div class="entry-company">Rigaer 51. Internationales Sprachgymnasium</div>
+            </div>
+            <span class="entry-date">09/1996 – 06/2008</span>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <!-- TECHNISCHE SKILLS -->
+      <section style="animation-delay:0.4s">
+        <h2 class="section-label" style="font-size:1.1rem">Fachliche Skills</h2>
+        <div>
+          <span class="skill-tag">Java</span>
+          <span class="skill-tag">ANSI C</span>
+          <span class="skill-tag">OOP</span>
+          <span class="skill-tag">MySQL</span>
+          <span class="skill-tag">Prozedurale Programmierung</span>
+          <span class="skill-tag">Analytisches Denken</span>
+          <span class="skill-tag">Logisches Denkvermögen</span>
+        </div>
+      </section>
+
+      <!-- SPRACHEN -->
+      <section style="animation-delay:0.5s">
+        <h2 class="section-label" style="font-size:1.1rem">Sprachen</h2>
+
+        <div class="lang-item" style="flex-direction:column; align-items:stretch;">
+          <div style="display:flex;justify-content:space-between;">
+            <span class="lang-name">Russisch</span>
+            <span class="lang-level">Muttersprache</span>
+          </div>
+          <div class="lang-bar-bg"><div class="lang-bar" style="width:100%"></div></div>
+        </div>
+
+        <div class="lang-item" style="flex-direction:column; align-items:stretch;">
+          <div style="display:flex;justify-content:space-between;">
+            <span class="lang-name">Deutsch</span>
+            <span class="lang-level">Fortgeschritten</span>
+          </div>
+          <div class="lang-bar-bg"><div class="lang-bar" style="width:82%"></div></div>
+        </div>
+
+        <div class="lang-item" style="flex-direction:column; align-items:stretch;">
+          <div style="display:flex;justify-content:space-between;">
+            <span class="lang-name">Englisch</span>
+            <span class="lang-level">Fortgeschritten</span>
+          </div>
+          <div class="lang-bar-bg"><div class="lang-bar" style="width:82%"></div></div>
+        </div>
+
+        <div class="lang-item" style="flex-direction:column; align-items:stretch;">
+          <div style="display:flex;justify-content:space-between;">
+            <span class="lang-name">Lettisch</span>
+            <span class="lang-level">Fortgeschritten</span>
+          </div>
+          <div class="lang-bar-bg"><div class="lang-bar" style="width:82%"></div></div>
+        </div>
+      </section>
+
+      <!-- SOFT SKILLS -->
+      <section style="animation-delay:0.6s">
+        <h2 class="section-label" style="font-size:1.1rem">Profil</h2>
+        <p style="font-size:0.85rem;line-height:1.8;color:var(--muted);">
+          Mehrsprachiger IT-Quereinsteiger mit starkem analytischen Hintergrund, internationaler Berufserfahrung in Vertrieb, Logistik und Übersetzung – und einer klaren Leidenschaft für Softwareentwicklung.
+        </p>
+      </section>
+
+    </aside>
+  </div>
+
+  <footer>
+    &copy; 2025 Vitaliy Smancer &nbsp;·&nbsp; Berlin
+  </footer>
+
+</div>
+</body>
+</html>
